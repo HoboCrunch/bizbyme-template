@@ -142,7 +142,7 @@ export default function WhatIsNaloxonePage() {
               </li>
             </ul>
             <p className="text-gray-800 leading-relaxed">
-              Each option is equally effective at reversing an opioid overdose. Nasal sprays are most common in community settings because they're safe, portable, and require no medical training.
+              Each option is equally effective at reversing an opioid overdose. Nasal sprays are most common in community settings because they&apos;re safe, portable, and require no medical training.
             </p>
           </section>
 
@@ -191,7 +191,7 @@ export default function WhatIsNaloxonePage() {
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Key Takeaways</h2>
             <ul className="space-y-2 list-disc list-inside text-gray-800">
               <li>Naloxone is a safe, non-addictive medication that reverses opioid overdoses.</li>
-              <li>It's available as a nasal spray, injection, or auto-injector.</li>
+              <li>It&apos;s available as a nasal spray, injection, or auto-injector.</li>
               <li>Anyone can carry and use it — no prescription is required.</li>
               <li>It saves lives by restoring breathing until medical help arrives.</li>
             </ul>

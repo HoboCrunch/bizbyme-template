@@ -268,7 +268,7 @@ export default function HowToUseNaloxonePage() {
                 className="block p-6 bg-light-grey border border-gray-300 rounded-xl hover:border-gray-400 hover:shadow-md transition-all"
               >
                 <h4 className="text-lg font-medium mb-2">What is Naloxone?</h4>
-                <p className="text-sm text-gray-600">Learn what naloxone is, how it works, and why it's essential for reversing opioid overdoses.</p>
+                <p className="text-sm text-gray-600">Learn what naloxone is, how it works, and why it&apos;s essential for reversing opioid overdoses.</p>
               </Link>
               <Link
                 href="/blog/when-to-use-naloxone"
