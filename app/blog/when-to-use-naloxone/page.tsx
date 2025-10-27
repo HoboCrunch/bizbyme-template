@@ -54,9 +54,11 @@ export default function WhenToUseNaloxonePage() {
         <article>
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
-            <img
+            <Image
               src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2350552555.jpg"
               alt="Naloxone awareness event - community education on recognizing and responding to opioid overdoses"
+              width={1200}
+              height={600}
               className="w-full h-auto object-cover"
             />
           </div>
@@ -90,7 +92,7 @@ export default function WhenToUseNaloxonePage() {
           {/* Introduction */}
           <div className="prose prose-lg max-w-none mb-8">
             <p className="text-lg leading-relaxed text-gray-800">
-              Opioid overdoses can happen unexpectedly — and knowing when to use naloxone can save a life. Naloxone (Narcan®) is a fast-acting medication that reverses the effects of opioids and restores normal breathing. If you suspect someone may be overdosing, every second matters. Here's how to recognize the warning signs and know exactly when to act.
+              Opioid overdoses can happen unexpectedly — and knowing when to use naloxone can save a life. Naloxone (Narcan®) is a fast-acting medication that reverses the effects of opioids and restores normal breathing. If you suspect someone may be overdosing, every second matters. Here&apos;s how to recognize the warning signs and know exactly when to act.
             </p>
           </div>
 
@@ -98,14 +100,16 @@ export default function WhenToUseNaloxonePage() {
           <section id="recognizing-signs" className="mb-10">
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Recognizing the Signs of an Opioid Overdose</h2>
             <p className="text-gray-800 leading-relaxed mb-4">
-              Before using naloxone, it's important to recognize the symptoms of an opioid overdose. Overdoses typically slow or stop a person's breathing and heart rate. The most common signs include:
+              Before using naloxone, it&apos;s important to recognize the symptoms of an opioid overdose. Overdoses typically slow or stop a person&apos;s breathing and heart rate. The most common signs include:
             </p>
 
             {/* Image: Naloxone at Pharmacy */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
-              <img
+              <Image
                 src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2361312847.jpg"
                 alt="Narcan displayed at pharmacy counter - easily accessible for emergency use"
+                width={1200}
+                height={675}
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -114,7 +118,7 @@ export default function WhenToUseNaloxonePage() {
               <li className="flex items-start gap-3 p-3 bg-light-grey rounded-lg border border-gray-300">
                 <span className="flex-shrink-0 text-xl">⚠️</span>
                 <div>
-                  <strong>Unresponsiveness</strong> — person won't wake up even if you shake or shout.
+                  <strong>Unresponsiveness</strong> — person won&apos;t wake up even if you shake or shout.
                 </div>
               </li>
               <li className="flex items-start gap-3 p-3 bg-light-grey rounded-lg border border-gray-300">
@@ -149,7 +153,7 @@ export default function WhenToUseNaloxonePage() {
               </li>
             </ul>
             <p className="text-gray-800 leading-relaxed font-medium">
-              If you notice one or more of these signs, it's time to act immediately — call 911 and prepare to use naloxone.
+              If you notice one or more of these signs, it&apos;s time to act immediately — call 911 and prepare to use naloxone.
             </p>
           </section>
 
@@ -206,7 +210,7 @@ export default function WhenToUseNaloxonePage() {
               <li className="flex gap-3">
                 <span className="flex-shrink-0 font-bold" style={{ color: '#F9542E' }}>4.</span>
                 <div>
-                  <strong>Wait 2–3 minutes:</strong> If there's no response, administer a second dose.
+                  <strong>Wait 2–3 minutes:</strong> If there&apos;s no response, administer a second dose.
                 </div>
               </li>
               <li className="flex gap-3">
@@ -249,7 +253,7 @@ export default function WhenToUseNaloxonePage() {
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">❌</span>
                   <div>
-                    <strong className="block mb-1">Assuming a person will 'sleep it off'</strong>
+                    <strong className="block mb-1">Assuming a person will &apos;sleep it off&apos;</strong>
                     <p className="text-sm text-gray-700">Never wait and see — overdoses are emergencies.</p>
                   </div>
                 </div>
@@ -279,7 +283,7 @@ export default function WhenToUseNaloxonePage() {
           <section id="final-thoughts" className="mb-10">
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Final Thoughts: Trust Your Instincts</h2>
             <p className="text-lg leading-relaxed text-gray-800">
-              If you suspect an overdose, it's better to act and be wrong than to hesitate and lose a life. Naloxone is safe, easy to use, and widely available. Keeping it nearby and knowing when to use it could make you the difference between tragedy and survival.
+              If you suspect an overdose, it&apos;s better to act and be wrong than to hesitate and lose a life. Naloxone is safe, easy to use, and widely available. Keeping it nearby and knowing when to use it could make you the difference between tragedy and survival.
             </p>
           </section>
 
@@ -303,7 +307,7 @@ export default function WhenToUseNaloxonePage() {
                 className="block p-6 bg-light-grey border border-gray-300 rounded-xl hover:border-gray-400 hover:shadow-md transition-all"
               >
                 <h4 className="text-lg font-medium mb-2">What is Naloxone?</h4>
-                <p className="text-sm text-gray-600">Learn what naloxone is, how it works, and why it's essential for reversing opioid overdoses.</p>
+                <p className="text-sm text-gray-600">Learn what naloxone is, how it works, and why it&apos;s essential for reversing opioid overdoses.</p>
               </Link>
               <Link
                 href="/blog/how-to-use-naloxone"

@@ -54,9 +54,11 @@ export default function WhatIsNaloxonePage() {
         <article>
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
-            <img
+            <Image
               src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2350553617.jpg"
               alt="Community naloxone awareness event with free naloxone distribution"
+              width={1200}
+              height={600}
               className="w-full h-auto object-cover"
             />
           </div>
@@ -103,9 +105,11 @@ export default function WhatIsNaloxonePage() {
             </p>
             {/* Image: Narcan Product */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
-              <img
+              <Image
                 src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2510277709.jpg"
                 alt="Narcan naloxone nasal spray - life-saving medication for opioid overdose reversal"
+                width={1200}
+                height={675}
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -146,7 +150,7 @@ export default function WhatIsNaloxonePage() {
           <section id="who-can-use" className="mb-10">
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Who Can Use Naloxone?</h2>
             <p className="text-gray-800 leading-relaxed">
-              Anyone can use naloxone — you don't need to be a doctor or first responder. Many states, including Washington, allow pharmacists to dispense naloxone without a prescription. Families, friends, and community members can carry it to help someone experiencing an overdose. Training is available at most community health centers and online through public health departments.
+              Anyone can use naloxone — you don&apos;t need to be a doctor or first responder. Many states, including Washington, allow pharmacists to dispense naloxone without a prescription. Families, friends, and community members can carry it to help someone experiencing an overdose. Training is available at most community health centers and online through public health departments.
             </p>
           </section>
 
@@ -154,7 +158,7 @@ export default function WhatIsNaloxonePage() {
           <section id="safety" className="mb-10">
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Is Naloxone Safe?</h2>
             <p className="text-gray-800 leading-relaxed">
-              Yes. Naloxone is very safe and has no potential for abuse or addiction. It only works on people who have opioids in their system — it won't cause harm if administered to someone not using opioids. Possible side effects are mild and may include temporary withdrawal symptoms such as nausea, sweating, or agitation.
+              Yes. Naloxone is very safe and has no potential for abuse or addiction. It only works on people who have opioids in their system — it won&apos;t cause harm if administered to someone not using opioids. Possible side effects are mild and may include temporary withdrawal symptoms such as nausea, sweating, or agitation.
             </p>
           </section>
 

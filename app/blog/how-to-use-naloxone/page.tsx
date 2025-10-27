@@ -54,9 +54,11 @@ export default function HowToUseNaloxonePage() {
         <article>
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
-            <img
+            <Image
               src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2510277709.jpg"
               alt="Narcan naloxone nasal spray - emergency medication for opioid overdose reversal"
+              width={1200}
+              height={600}
               className="w-full h-auto object-cover"
             />
           </div>
@@ -90,7 +92,7 @@ export default function HowToUseNaloxonePage() {
           {/* Introduction */}
           <div className="prose prose-lg max-w-none mb-8">
             <p className="text-lg leading-relaxed text-gray-800">
-              Opioid overdoses are a growing public health crisis — but having the right tool and knowing how to use it can make the difference between life and death. Naloxone (often known by the brand name Narcan®) is a safe, effective antidote that can quickly reverse an opioid overdose when administered correctly. In this guide we'll walk you through how to use naloxone, when to use it, and what to do afterwards.
+              Opioid overdoses are a growing public health crisis — but having the right tool and knowing how to use it can make the difference between life and death. Naloxone (often known by the brand name Narcan®) is a safe, effective antidote that can quickly reverse an opioid overdose when administered correctly. In this guide we&apos;ll walk you through how to use naloxone, when to use it, and what to do afterwards.
             </p>
           </div>
 
@@ -112,10 +114,10 @@ export default function HowToUseNaloxonePage() {
               <li>Altered or no responsiveness</li>
               <li>Very slow or absent breathing (gasping or snoring sounds)</li>
               <li>Lips or nails turning blue or gray</li>
-              <li>Very small "pin-point" pupils</li>
+              <li>Very small &ldquo;pin-point&rdquo; pupils</li>
             </ul>
             <p className="text-gray-800 leading-relaxed">
-              Because naloxone only works on opioids, if you are unsure what drug has been used but see these signs, you should still consider using it — it will not harm someone who hasn't taken opioids.
+              Because naloxone only works on opioids, if you are unsure what drug has been used but see these signs, you should still consider using it — it will not harm someone who hasn&apos;t taken opioids.
             </p>
           </section>
 
@@ -123,14 +125,16 @@ export default function HowToUseNaloxonePage() {
           <section id="step-by-step" className="mb-10">
             <h2 className="text-3xl font-light mb-4 scroll-mt-20">Step-by-Step: Using the Nasal Spray Formulation</h2>
             <p className="text-gray-800 leading-relaxed mb-6">
-              Most community naloxone kits contain a nasal spray device because it is simple to administer. Here's how to use it correctly:
+              Most community naloxone kits contain a nasal spray device because it is simple to administer. Here&apos;s how to use it correctly:
             </p>
 
             {/* Image: Naloxone at Pharmacy */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
-              <img
+              <Image
                 src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2361312847.jpg"
                 alt="Narcan available over-the-counter at pharmacy - accessible life-saving medication"
+                width={1200}
+                height={675}
                 className="w-full h-auto object-cover"
               />
             </div>
@@ -140,7 +144,7 @@ export default function HowToUseNaloxonePage() {
                 <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>1</span>
                 <div>
                   <strong className="block mb-1">Check responsiveness:</strong>
-                  <p className="text-gray-800">Shake the person gently, shout their name, rub your knuckles firmly on the breastbone (sternum). If they don't respond and are breathing slowly or not at all — treat it as an emergency.</p>
+                  <p className="text-gray-800">Shake the person gently, shout their name, rub your knuckles firmly on the breastbone (sternum). If they don&apos;t respond and are breathing slowly or not at all — treat it as an emergency.</p>
                 </div>
               </li>
               <li className="flex gap-4">
@@ -168,7 +172,7 @@ export default function HowToUseNaloxonePage() {
                 <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>5</span>
                 <div>
                   <strong className="block mb-1">Insert nozzle:</strong>
-                  <p className="text-gray-800">Place your thumb on the bottom of the plunger and your first and middle fingers on either side of the nozzle. Insert the nozzle tip into one nostril, until your fingers are against the bottom of the person's nose.</p>
+                  <p className="text-gray-800">Place your thumb on the bottom of the plunger and your first and middle fingers on either side of the nozzle. Insert the nozzle tip into one nostril, until your fingers are against the bottom of the person&apos;s nose.</p>
                 </div>
               </li>
               <li className="flex gap-4">
@@ -182,7 +186,7 @@ export default function HowToUseNaloxonePage() {
                 <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>7</span>
                 <div>
                   <strong className="block mb-1">Recovery position:</strong>
-                  <p className="text-gray-800">After administering, place the person in the 'recovery position' (on their side), and stay with them. Monitor their breathing and responsiveness.</p>
+                  <p className="text-gray-800">After administering, place the person in the &apos;recovery position&apos; (on their side), and stay with them. Monitor their breathing and responsiveness.</p>
                 </div>
               </li>
               <li className="flex gap-4">
@@ -209,11 +213,11 @@ export default function HowToUseNaloxonePage() {
             <div className="space-y-4 bg-light-grey border border-gray-300 rounded-xl p-6">
               <div className="flex gap-3">
                 <span style={{ color: '#F9542E' }}>•</span>
-                <p className="text-gray-800">Naloxone's effects are temporary — the opioids may last longer in the body, so it's essential that the person still receives emergency medical care.</p>
+                <p className="text-gray-800">Naloxone&apos;s effects are temporary — the opioids may last longer in the body, so it&apos;s essential that the person still receives emergency medical care.</p>
               </div>
               <div className="flex gap-3">
                 <span style={{ color: '#F9542E' }}>•</span>
-                <p className="text-gray-800">Even if you're unsure the person used opioids, administering naloxone can still be worth it: it won't harm someone not on opioids.</p>
+                <p className="text-gray-800">Even if you&apos;re unsure the person used opioids, administering naloxone can still be worth it: it won&apos;t harm someone not on opioids.</p>
               </div>
               <div className="flex gap-3">
                 <span style={{ color: '#F9542E' }}>•</span>
@@ -221,11 +225,11 @@ export default function HowToUseNaloxonePage() {
               </div>
               <div className="flex gap-3">
                 <span style={{ color: '#F9542E' }}>•</span>
-                <p className="text-gray-800">Store naloxone at room temperature, away from light and extreme temperatures. Don't let it freeze.</p>
+                <p className="text-gray-800">Store naloxone at room temperature, away from light and extreme temperatures. Don&apos;t let it freeze.</p>
               </div>
               <div className="flex gap-3">
                 <span style={{ color: '#F9542E' }}>•</span>
-                <p className="text-gray-800">Replace expired or used doses as soon as you can. Keep multiple doses available if you're in a high-risk environment.</p>
+                <p className="text-gray-800">Replace expired or used doses as soon as you can. Keep multiple doses available if you&apos;re in a high-risk environment.</p>
               </div>
             </div>
           </section>
@@ -243,7 +247,7 @@ export default function HowToUseNaloxonePage() {
             <div className="bg-light-grey border border-gray-300 rounded-xl p-6 md:p-8 my-10">
               <h2 className="text-2xl font-light mb-4">Call to Action</h2>
               <p className="text-lg leading-relaxed mb-4">
-                If you or someone you know may be around an overdose risk, get naloxone <strong>now</strong>. Visit your local pharmacy or community distribution program, ask for training, and keep it within reach. You can't predict when an opioid emergency will happen — but you <em>can</em> be ready for it.
+                If you or someone you know may be around an overdose risk, get naloxone <strong>now</strong>. Visit your local pharmacy or community distribution program, ask for training, and keep it within reach. You can&apos;t predict when an opioid emergency will happen — but you <em>can</em> be ready for it.
               </p>
               <p className="leading-relaxed">
                 Looking for free or low-cost naloxone in your area? Check our{' '}
