@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  const { zipCode, business, afterDate } = await request.json();
+  const { zipCode, afterDate } = await request.json();
 
   const encoder = new TextEncoder();
 
@@ -19,27 +19,19 @@ export async function POST(request: NextRequest) {
         // Send initial status
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'status', message: 'Initializing search...' })}\n\n`));
 
-        const timeframeText = afterDate
-          ? `Search for events within 100 miles of the provided zip code, focusing on events happening AFTER ${afterDate}. Look for events in the next 60 days from that date.`
-          : `Search for events within 100 miles of the provided zip code, focusing on events happening in the next 60 days.`;
+        const systemPrompt = `In ZIP ${zipCode} and nearby areas, list confirmed providers and resources offering free or low-cost naloxone access.
 
-        const systemPrompt = `You are a business event discovery assistant that helps professionals find networking opportunities, conferences, workshops, and business development events in their area.
+CRITICAL REQUIREMENTS:
+- Include the provider name, description, locations (address, hours), contact/website as available
+- Specifically list individual pharmacies (chain + independent) in ${zipCode} and surrounding area that stock naloxone over-the-counter (without prescription) and note the pharmacy name and address
+- Include other distribution channels such as county dispenser boxes, mail-order programs, community organisations
+- Do NOT just say "Pharmacies" generically; list each specific pharmacy individually
+- Ensure data reflects local availability around ${zipCode}
+- You MUST return results in JSON format
 
-${timeframeText} Include:
-- Events directly related to the user's industry or business type
-- General business networking events (Chamber of Commerce, business associations, entrepreneur meetups)
-- Professional development workshops and seminars
-- Trade shows, conferences, and industry gatherings
-- Cross-industry networking events (valuable for all business professionals)
+Return 10-20 providers in valid JSON format with title, time (hours), location (full address), distance, description, registration_url (website), organizer, and tags for each provider.`;
 
-Return up to 20 events in valid JSON format with title, date, time, location, distance, description, relevance_score, registration_url, organizer, and tags for each event.`;
-
-        const dateConstraint = afterDate ? ` AFTER ${afterDate}` : '';
-        const userPrompt = `Find business networking events for:
-- Zip Code: ${zipCode}
-- Business: ${business}${dateConstraint ? `\n- Time period: Events happening${dateConstraint}` : ''}
-
-Return results in JSON format.`;
+        const userPrompt = `Find naloxone providers and resources in ZIP code ${zipCode}. List specific pharmacies, community distribution points, and other free or low-cost naloxone access points. Return results in JSON format.`;
 
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'status', message: 'Connecting to AI search...' })}\n\n`));
 
@@ -67,7 +59,7 @@ Return results in JSON format.`;
           return;
         }
 
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'status', message: 'Searching for events...' })}\n\n`));
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'status', message: 'Searching for naloxone providers...' })}\n\n`));
 
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
@@ -75,10 +67,10 @@ Return results in JSON format.`;
         let lastStatusUpdate = Date.now();
 
         const statusMessages = [
-          'Finding networking opportunities...',
-          'Checking local venues...',
-          'Discovering business events...',
-          'Analyzing event relevance...',
+          'Locating pharmacies...',
+          'Checking distribution points...',
+          'Finding community resources...',
+          'Verifying availability...',
           'Compiling results...',
         ];
         let statusIndex = 0;
@@ -139,7 +131,7 @@ Return results in JSON format.`;
         controller.enqueue(encoder.encode(`data: ${JSON.stringify({
           type: 'complete',
           content: fullContent,
-          params: { zipCode, business }
+          params: { zipCode }
         })}\n\n`));
 
         controller.close();

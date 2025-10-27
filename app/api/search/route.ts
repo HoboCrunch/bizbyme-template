@@ -15,11 +15,11 @@ interface Event {
 
 export async function POST(request: NextRequest) {
   try {
-    const { zipCode, business, afterDate } = await request.json();
+    const { zipCode, afterDate } = await request.json();
 
-    if (!zipCode || !business) {
+    if (!zipCode) {
       return NextResponse.json(
-        { error: 'Zip code and business description are required' },
+        { error: 'Zip code is required' },
         { status: 400 }
       );
     }
@@ -33,57 +33,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // System prompt from system-prompt.md
-    const timeframeText = afterDate
-      ? `Search for events within 100 miles of the provided zip code, focusing on events happening AFTER ${afterDate}. Look for events in the next 60 days from that date.`
-      : `Search for events within 100 miles of the provided zip code, focusing on events happening in the next 60 days.`;
+    // System prompt for naloxone finder
+    const systemPrompt = `In ZIP ${zipCode} and nearby areas, list confirmed providers and resources offering free or low-cost naloxone access.
 
-    const systemPrompt = `You are a business event discovery assistant that helps professionals find networking opportunities, conferences, workshops, and business development events in their area.
+CRITICAL REQUIREMENTS:
+- Include the provider name, description, locations (address, hours), contact/website as available
+- Specifically list individual pharmacies (chain + independent) in ${zipCode} and surrounding area that stock naloxone over-the-counter (without prescription) and note the pharmacy name and address
+- Include other distribution channels such as county dispenser boxes, mail-order programs, community organisations
+- Do NOT just say "Pharmacies" generically; list each specific pharmacy individually
+- Ensure data reflects local availability around ${zipCode}
+- You MUST return results in JSON format
 
-${timeframeText} Include:
-- Events directly related to the user's industry or business type
-- General business networking events (Chamber of Commerce, business associations, entrepreneur meetups)
-- Professional development workshops and seminars
-- Trade shows, conferences, and industry gatherings
-- Cross-industry networking events (valuable for all business professionals)
-
-CRITICAL INSTRUCTIONS:
-- You MUST return events in JSON format. Do NOT apologize or say you cannot find events.
-- Search Eventbrite, Meetup.com, chamber of commerce sites, industry association calendars, and other event platforms.
-- If you cannot find exact dates for some events, include them anyway with approximate timing or recurring information.
-- Cast a wide net - include nearby cities within the 100 mile radius if needed.
-- For distance: Calculate actual distance from zip code to venue. For same zip code, use 1-4 miles.
-
-Return 10-20 events in this EXACT JSON format:
+Return 10-20 providers in this EXACT JSON format:
 {
   "search_location": "City, State (Zip Code)",
-  "search_radius": "100 miles",
-  "business_focus": "Brief summary of user's business",
-  "events": [
+  "providers": [
     {
-      "title": "Event Name",
-      "date": "Month DD, YYYY",
-      "time": "Start Time - End Time",
-      "location": "Venue Name, City, State",
+      "title": "Provider/Pharmacy Name",
+      "date": "",
+      "time": "Hours of operation",
+      "location": "Full Address",
       "distance": "XX miles",
-      "description": "2-3 sentence description highlighting why this event is relevant",
-      "relevance_score": "High, Medium, or General",
-      "registration_url": "Direct URL to event page",
-      "organizer": "Organization hosting the event",
-      "tags": ["tag1", "tag2", "tag3"]
+      "description": "Description of service, whether prescription required, cost details",
+      "relevance_score": "High",
+      "registration_url": "Website URL if available",
+      "organizer": "Organization or chain name",
+      "tags": ["pharmacy", "free", "OTC", "24/7", etc]
     }
   ]
 }
 
-Sort by: 1) Date (sooner first), 2) Distance (closer first). Use real event data from current sources.`;
+Sort by: 1) Distance (closer first), 2) Free/low-cost options first. Use real, current provider data.`;
 
     // User prompt
-    const dateConstraint = afterDate ? ` AFTER ${afterDate}` : '';
-    const userPrompt = `Find business networking events for:
-- Zip Code: ${zipCode}
-- Business: ${business}${dateConstraint ? `\n- Time period: Events happening${dateConstraint}` : ''}
-
-Return results in JSON format as specified in your system prompt.`;
+    const userPrompt = `Find naloxone providers and resources in ZIP code ${zipCode}. List specific pharmacies, community distribution points, and other free or low-cost naloxone access points. Return results in JSON format as specified in your system prompt.`;
 
     // Call Perplexity API (non-streaming)
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
@@ -141,7 +124,7 @@ Return results in JSON format as specified in your system prompt.`;
     return NextResponse.json({
       results: events,
       rawResponse: fullContent,
-      searchParams: { zipCode, business },
+      searchParams: { zipCode },
     });
   } catch (error) {
     console.error('Search API error:', error);
@@ -181,13 +164,13 @@ function parseEventsFromResponse(content: string): Event[] {
   try {
     // Try to extract JSON from the response
     console.log('Attempting JSON parsing...');
-    const jsonMatch = content.match(/\{[\s\S]*"events"[\s\S]*\}/);
+    const jsonMatch = content.match(/\{[\s\S]*"providers"[\s\S]*\}/);
     if (jsonMatch) {
       console.log('Found JSON structure in response');
       const parsed = JSON.parse(jsonMatch[0]);
-      if (parsed.events && Array.isArray(parsed.events)) {
-        console.log(`Extracted ${parsed.events.length} events from JSON`);
-        const events = parsed.events.map((event: any) => ({
+      if (parsed.providers && Array.isArray(parsed.providers)) {
+        console.log(`Extracted ${parsed.providers.length} providers from JSON`);
+        const events = parsed.providers.map((event: any) => ({
           title: event.title || '',
           date: event.date || '',
           time: event.time,

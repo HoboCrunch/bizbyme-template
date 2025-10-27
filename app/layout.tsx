@@ -3,8 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://bizbyme-app.vercel.app'),
-  title: "Biz By Me - Find Local Business Networking Events",
-  description: "Search local networking opportunities to maximize your business development",
+  title: "Naloxone Finder - Find Free Naloxone Near You",
+  description: "Locate pharmacies, community resources, and free naloxone distribution points in your area",
   viewport: {
     width: 'device-width',
     initialScale: 1,
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
     apple: "/bizbyme-logo.png",
   },
   openGraph: {
-    title: "Biz By Me - Find Local Business Networking Events",
-    description: "Search local networking opportunities to maximize your business development",
+    title: "Naloxone Finder - Find Free Naloxone Near You",
+    description: "Locate pharmacies, community resources, and free naloxone distribution points in your area",
     images: ["/bizbyme-logo.png"],
   },
 };

@@ -1,0 +1,99 @@
+{
+    "title": "What is Naloxone",
+    "meta_description": "Learn what naloxone (Narcan®) is, how it works to reverse opioid overdoses, and why carrying it can save lives. Discover its forms, safety, and community importance.",
+    "content": [
+      {
+        "type": "heading1",
+        "text": "What is Naloxone?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Naloxone, commonly known by the brand name Narcan®, is a life-saving medication designed to rapidly reverse opioid overdoses. It works by blocking the effects of opioids in the brain, quickly restoring normal breathing in a person whose breathing has slowed or stopped due to opioid use."
+      },
+      {
+        "type": "heading2",
+        "text": "How Naloxone Works"
+      },
+      {
+        "type": "paragraph",
+        "text": "Opioids such as heroin, fentanyl, and prescription painkillers (like oxycodone and morphine) attach to specific receptors in the brain that control breathing. In an overdose, these receptors become overly activated, slowing breathing to dangerous levels. Naloxone acts as an opioid antagonist — it binds to those same receptors but blocks and displaces the opioids, reversing their life-threatening effects within minutes."
+      },
+      {
+        "type": "heading2",
+        "text": "Forms of Naloxone"
+      },
+      {
+        "type": "paragraph",
+        "text": "Naloxone comes in several easy-to-use forms so that anyone — not just medical professionals — can administer it in an emergency. The most common forms include:"
+      },
+      {
+        "type": "unordered_list",
+        "items": [
+          "💨 **Nasal Spray (Narcan® or generic):** The simplest form to use. Spray once into one nostril; no assembly required.",
+          "💉 **Injectable Naloxone:** Requires drawing the medication into a syringe and injecting it into a muscle (thigh, arm, or buttock).",
+          "🩺 **Auto-Injector (EVZIO®):** A pre-filled device that gives verbal instructions as you administer the dose."
+        ]
+      },
+      {
+        "type": "paragraph",
+        "text": "Each option is equally effective at reversing an opioid overdose. Nasal sprays are most common in community settings because they’re safe, portable, and require no medical training."
+      },
+      {
+        "type": "heading2",
+        "text": "Who Can Use Naloxone?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Anyone can use naloxone — you don’t need to be a doctor or first responder. Many states, including Washington, allow pharmacists to dispense naloxone without a prescription. Families, friends, and community members can carry it to help someone experiencing an overdose. Training is available at most community health centers and online through public health departments."
+      },
+      {
+        "type": "heading2",
+        "text": "Is Naloxone Safe?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Yes. Naloxone is very safe and has no potential for abuse or addiction. It only works on people who have opioids in their system — it won’t cause harm if administered to someone not using opioids. Possible side effects are mild and may include temporary withdrawal symptoms such as nausea, sweating, or agitation."
+      },
+      {
+        "type": "heading2",
+        "text": "Why Carry Naloxone?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Opioid overdoses can happen anywhere — at home, work, public places, or among friends. Having naloxone nearby means being ready to save a life. Studies show that communities with widespread naloxone availability see significant reductions in overdose deaths. Every minute counts, and naloxone gives time for emergency responders to arrive."
+      },
+      {
+        "type": "heading2",
+        "text": "Where to Get Naloxone"
+      },
+      {
+        "type": "paragraph",
+        "text": "In Washington State, naloxone is available at many local pharmacies, harm reduction centers, and community distribution boxes. Programs like the Whatcom County Naloxone Dispenser Box Initiative and mail-order services through organizations such as the People's Harm Reduction Alliance provide free access to residents. No ID or prescription is needed."
+      },
+      {
+        "type": "heading2",
+        "text": "How Long Does Naloxone Last?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Naloxone typically begins working within 2–3 minutes and lasts for 30–90 minutes, depending on the opioid involved. Because some opioids, like fentanyl, stay active longer, multiple doses may be required. Always call 911 after giving naloxone, even if the person seems to recover."
+      },
+      {
+        "type": "heading2",
+        "text": "Key Takeaways"
+      },
+      {
+        "type": "unordered_list",
+        "items": [
+          "Naloxone is a safe, non-addictive medication that reverses opioid overdoses.",
+          "It’s available as a nasal spray, injection, or auto-injector.",
+          "Anyone can carry and use it — no prescription is required.",
+          "It saves lives by restoring breathing until medical help arrives."
+        ]
+      },
+      {
+        "type": "call_to_action",
+        "text": "If you live in Bellingham or Whatcom County, visit our [Naloxone Provider Directory](#) to find free, 24/7 access points near you. Carry naloxone, learn how to use it, and help protect your community."
+      }
+    ]
+  }
