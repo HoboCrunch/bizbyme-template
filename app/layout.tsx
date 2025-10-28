@@ -11,13 +11,13 @@ export const metadata: Metadata = {
     maximumScale: 5,
   },
   icons: {
-    icon: "/bizbyme-logo.png",
-    apple: "/bizbyme-logo.png",
+    icon: "/findmynaloxone-logo.png",
+    apple: "/findmynaloxone-logo.png",
   },
   openGraph: {
     title: "Naloxone Finder - Find Free Naloxone Near You",
     description: "Locate pharmacies, community resources, and free naloxone distribution points in your area",
-    images: ["/bizbyme-logo.png"],
+    images: ["/findmynaloxone-logo.png"],
   },
 };
 

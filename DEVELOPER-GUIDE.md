@@ -23,8 +23,9 @@
 2. App calls Perplexity AI API with specialized prompt
 3. AI searches the web for naloxone providers near that ZIP code
 4. Results are parsed, filtered, and displayed as provider cards
-5. Users can sort by distance or relevance
-6. Users can click "Visit Website" to access provider information
+5. Users can filter by cost (free/paid), training requirements, and location type (physical/online)
+6. Results are automatically sorted: Free providers first, then by distance (online providers shown last)
+7. Users can click "visit site" links or action buttons to access provider information
 
 ---
 
@@ -56,7 +57,7 @@ bizbyme-template/
 │   ├── layout.tsx                    # Root layout, metadata
 │   └── page.tsx                      # Home page with search form
 ├── public/
-│   └── bizbyme-logo.png              # Heart logo (orange with white plus)
+│   └── findmynaloxone-logo.png       # Heart logo (orange with white plus)
 ├── tailwind.config.ts                # Tailwind configuration
 ├── tsconfig.json                     # TypeScript configuration
 ├── package.json                      # Dependencies
@@ -78,7 +79,7 @@ Enters ZIP code
     ↓
 Clicks "Search" button
     ↓
-Loading state (typewriter animation with status messages)
+Loading state (rotating carousel messages)
     ↓
 API calls Perplexity AI with ZIP code
     ↓
@@ -114,7 +115,8 @@ User can sort, view details, click "Visit Website"
 **Frontend (Results Page)**
 - Loads results from `sessionStorage`
 - Renders provider cards with all details
-- Provides sorting options (distance, relevance)
+- Provides filter controls (cost, training required, location type)
+- Automatic sorting: Free > Distance (physical before online)
 - Allows "Load More" to fetch additional providers
 
 ---
@@ -125,25 +127,24 @@ User can sort, view details, click "Visit Website"
 **Purpose**: Main landing page with ZIP code search form
 
 **What it contains**:
-- ZIP code input field
+- ZIP code input field (constrained width for better UX)
 - Search button with loading states
-- Example ZIP code suggestions (10001, 90210, 60601)
-- Typewriter loading animation
-- Header with logo and branding
-- Footer with About button
+- Blog article cards for educational content
+- Rotating carousel loading messages
+- Header with logo and orange Contact button
+- Footer with centered "powered by nove" branding
 
 **Key state variables**:
 - `zipCode`: Current ZIP code input
 - `isLoading`: Controls loading UI
-- `typedText`: Status message during search
-- `showCursor`: Blinking cursor animation
+- `typedText`: Current status message in carousel
+- `isFocused`: Input focus state
 
 **When to modify**:
-- Change branding/logo: Update header section (line ~106)
-- Modify search UI: Update form section (line ~132)
-- Change example ZIP codes: Update `exampleSearches` array (line ~30)
-- Update loading messages: Modify `statusMessages` array (line ~49)
-- Change main heading: Update headline section (line ~119)
+- Change branding/logo: Update header section
+- Modify search UI: Update form section
+- Update loading messages: Modify `statusMessages` array (rotating phrases)
+- Change main heading: Update headline section ("Find Free" / "Naloxone")
 
 ---
 
@@ -152,37 +153,52 @@ User can sort, view details, click "Visit Website"
 
 **What it contains**:
 - Sticky header with branding, "Naloxone providers near you" headline, and "New Search" button
-- Provider cards grid with Free/Paid badges, tags, and "Get Directions" button
+- Filter controls (Cost, Training Required, Location Type)
+- Provider cards grid with Free/Paid badges, tags, and smart action buttons
 - "Load More" button
-- Footer with result count
+- Footer with result count, centered Nove branding, and orange Contact button
 
 **Key state variables**:
 - `providers`: Array of provider results
 - `searchParams`: Stores ZIP code from search
 - `loadingMore`: Controls "Load More" button state
+- `costFilter`: Filter by free/paid ('all' | 'free' | 'paid')
+- `trainingFilter`: Filter by training requirement ('all' | 'required' | 'not-required')
+- `locationTypeFilter`: Filter by location type ('all' | 'physical' | 'online')
 
 **Key components**:
 - `ResultsPage`: Main component
 - `ProviderCard`: Individual provider card component
 
+**Filtering behavior**:
+- **Cost Filter**: Shows only free or paid providers
+- **Training Filter**: Checks for 'training' tag or training-related keywords
+- **Location Type Filter**: Distinguishes physical locations from online/mail-order
+
 **Sorting behavior**:
-- **Hard-coded multi-tier sorting** (no user controls):
+- **Automatic 2-tier sorting**:
   - Tier 1: Free > Paid
-  - Tier 2: 24/7 > non-24/7
-  - Tier 3: OTC > non-OTC
-  - Tier 4: Distance (closest first)
+  - Tier 2: Distance (physical locations before online, then by distance)
+  - Online providers treated as "farthest" and display "online" badge instead of distance
 
 **Badge system**:
 - **Free badge**: White text on orange (#F9542E) background
 - **Paid badge**: Bold orange (#F9542E) "$$$" text
+- **Distance badge**: Shows distance in miles, or "online" for non-physical providers
 - **OTC/24/7 tags**: Green badges (bg-green-100, text-green-800)
 - **Other tags**: Light blue badges (bg-blue-50, text-blue-700)
+- **Filtered tags**: Excludes 'free', 'paid', 'harm reduction', 'community', 'no prescription'
+
+**Smart button logic**:
+- Physical locations: "Get Directions" → Google Maps
+- Online/mail-order: "Visit Website" → Provider's website
+- Website link: Shows "visit site" instead of organizer name
 
 **When to modify**:
-- Change card design: Update `ProviderCard` function (line ~223)
-- Change provider display fields: Update card JSX (line ~240-380)
-- Modify empty state: Update no-results section (line ~96)
-- Adjust sorting tiers: Update `sortedProviders` logic (line ~60-83)
+- Change card design: Update `ProviderCard` function
+- Add/remove filters: Update filter state and logic
+- Adjust sorting: Update `sortedProviders` logic
+- Modify tag filtering: Update `irrelevantTags` array
 
 ---
 
@@ -265,7 +281,7 @@ User can sort, view details, click "Visit Website"
 
 **When to modify**:
 - Update page title/SEO: Modify `metadata` object (line ~4-22)
-- Change favicon: Replace `/public/bizbyme-logo.png` and update path
+- Change favicon: Replace `/public/findmynaloxone-logo.png` and update path
 - Update meta description: Edit `description` field (line ~7)
 
 ---
@@ -450,26 +466,28 @@ model: 'sonar-pro',  // Change to 'sonar', 'sonar-medium', etc.
 
 #### 5. **Modify Sorting Priority**
 
-**Note**: The app uses hard-coded multi-tier sorting (no user-facing controls)
+**Note**: The app uses automatic 2-tier sorting (no user-facing controls)
 
 **File**: `/app/results/page.tsx`
-**Location**: Line ~60-83 (sortedProviders)
+**Location**: `sortedProviders` logic
 
 Current sorting tiers:
-1. Free > Paid
-2. 24/7 > non-24/7
-3. OTC > non-OTC
-4. Distance (closest first)
+1. **Free > Paid**: Free providers always appear first
+2. **Distance**: Physical locations before online, then sorted by distance
+   - Online/mail-order providers treated as "farthest"
+   - Physical providers sorted by actual distance (closest first)
 
-**To add a new tier**:
-Add another comparison block before the distance sorting:
+**Result order**: Free physical → Free online → Paid physical → Paid online
+
+**To add filtering by tags**:
+Add a new filter tier before distance sorting:
 ```typescript
-// Tier 4: New priority
-const aHasNewFeature = a.tags?.some(tag => tag === 'NewFeature') || false;
-const bHasNewFeature = b.tags?.some(tag => tag === 'NewFeature') || false;
+// Check for specific feature
+const aIsOnline = getLocationType(a) === 'online';
+const bIsOnline = getLocationType(b) === 'online';
 
-if (aHasNewFeature && !bHasNewFeature) return -1;
-if (!aHasNewFeature && bHasNewFeature) return 1;
+if (!aIsOnline && bIsOnline) return -1;  // Physical first
+if (aIsOnline && !bIsOnline) return 1;
 ```
 
 ---
@@ -477,17 +495,21 @@ if (!aHasNewFeature && bHasNewFeature) return 1;
 #### 6. **Customize Provider Cards**
 
 **File**: `/app/results/page.tsx`
-**Location**: Line ~223-400 (ProviderCard function)
+**Location**: `ProviderCard` function
 
 **Current card features**:
-- **Free/Paid badge**: Line ~265-271
+- **Free/Paid badge**: Top right of card title
   - Free: White text on orange background
   - Paid: Bold orange "$$$" text
-- **Organizer link**: Line ~273-285 (clickable when website available)
-- **Tags**: Line ~329-365 (filtered, sorted, color-coded)
+- **"visit site" link**: Underlined link when website URL available (replaces organizer name display)
+- **Distance badge**: Shows miles or "online" for non-physical providers
+- **Tags**: Filtered and color-coded
   - OTC/24/7: Green badges
   - Others: Light blue badges
-- **Get Directions button**: Line ~367-381 (Google Maps integration)
+  - Filtered out: free, paid, harm reduction, community, no prescription
+- **Smart action buttons**:
+  - Physical locations: "Get Directions" → Google Maps
+  - Online/mail-order: "Visit Website" → Provider's website
 
 **Change badge colors**:
 ```tsx
@@ -741,25 +763,26 @@ http://localhost:3000
 
 ### Potential Features
 1. **Map view** - Show providers on interactive map
-2. **Filters** - Filter by pharmacy chain, hours, free vs paid
+2. ✅ **Filters** - ~~Filter by pharmacy chain, hours, free vs paid~~ (Implemented: Cost, Training, Location Type)
 3. **User location** - Auto-detect user's location
 4. **Favorites** - Save favorite providers
-5. **Directions** - Link to Google Maps for directions
+5. ✅ **Directions** - ~~Link to Google Maps for directions~~ (Implemented with smart buttons)
 6. **Phone integration** - Click to call provider
 7. **Language support** - Multi-language interface
 8. **Accessibility** - Enhanced screen reader support
+9. **Additional filters** - Pharmacy chain, operating hours, 24/7 availability
 
 ### Where to Add Them
 
 **Map View**:
 - Add to `/app/results/page.tsx`
 - Use library like `react-map-gl` or `google-maps-react`
-- Add toggle between list/map view in sort controls
+- Add toggle between list/map view above provider cards
 
-**Filters**:
-- Add filter state in `/app/results/page.tsx`
-- Create filter UI in sort controls section
-- Add filtering logic before mapping provider cards
+**Additional Filters** (pharmacy chain, hours):
+- Extend existing filter system in `/app/results/page.tsx`
+- Add new filter state variables
+- Update filtering logic to include new criteria
 
 **User Location**:
 - Add to `/app/page.tsx`
@@ -787,7 +810,38 @@ Check these files first:
 
 ## Changelog
 
-### v1.1.0 (Current)
+### v1.2.0 (Current)
+**Date**: 2025-10-28
+
+**New Features**:
+- Advanced filtering system: Cost (free/paid), Training Required (yes/no), Location Type (physical/online)
+- Smart action buttons: "Get Directions" for physical, "Visit Website" for online providers
+- Online providers display "online" badge instead of distance
+- Training filter now detects 'training' tag standalone
+- Footer branding with Nove logo and Contact button on all pages except home
+- Home page Contact button moved to header (orange, top-right)
+
+**Sorting Changes**:
+- Simplified to 2-tier sorting: Free > Paid, then Distance
+- Physical locations prioritized over online within each cost tier
+- Result order: Free physical → Free online → Paid physical → Paid online
+
+**UI/UX Improvements**:
+- Tighter title spacing on home page ("Find Free" / "Naloxone")
+- Capitalized title text
+- ZIP code input constrained to appropriate width
+- Loading carousel with rotating phrases (replaced typewriter animation)
+- "visit site" links replace organizer name display
+- Additional filtered tags: 'no prescription', 'harm reduction', 'community'
+- Distance badge shows "online" for non-physical providers
+
+**Branding Updates**:
+- Logo renamed: bizbyme-logo.png → findmynaloxone-logo.png
+- Updated URLs: noveproduct.com → novedevice.com
+- Contact link: novedevice.com/contact-us
+- Centered "powered by nove" in footers
+
+### v1.1.0
 **Date**: 2025-10-27
 
 **Bug Fixes**:
@@ -819,4 +873,4 @@ Check these files first:
 
 ---
 
-*Last Updated: 2025-10-27*
+*Last Updated: 2025-10-28*

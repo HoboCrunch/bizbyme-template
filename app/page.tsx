@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -11,21 +11,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [typedText, setTypedText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
-
-  // Blinking cursor
-  useEffect(() => {
-    if (!isLoading) {
-      setShowCursor(true);
-      return;
-    }
-
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorInterval);
-  }, [isLoading]);
 
   const blogArticles = [
     {
@@ -56,21 +41,17 @@ export default function Home() {
     setTypedText('');
 
     const statusMessages = [
-      'Initializing search...',
-      'Connecting to AI search...',
-      'Searching for providers...',
-      'Locating pharmacies...',
-      'Finding distribution points...',
-      'Compiling results...',
+      'Finding life saving medication',
+      'Searching for providers near you',
+      'Locating pharmacies and resources',
+      'Hang tight - results finalizing',
     ];
 
     let statusIndex = 0;
     const statusInterval = setInterval(() => {
-      if (statusIndex < statusMessages.length) {
-        setTypedText(statusMessages[statusIndex]);
-        statusIndex++;
-      }
-    }, 1500);
+      setTypedText(statusMessages[statusIndex]);
+      statusIndex = (statusIndex + 1) % statusMessages.length;
+    }, 2000);
 
     try {
       const response = await fetch('/api/search', {
@@ -107,16 +88,27 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col animate-fadeIn">
-      {/* Minimal Header */}
+      {/* Header */}
       <header className="p-4 md:p-6 lg:p-8">
-        <div className="flex items-center gap-2.5 opacity-90 hover:opacity-100 transition-opacity">
-          <Image
-            src="/bizbyme-logo.png"
-            alt="Biz By Me"
-            width={32}
-            height={32}
-          />
-          <h1 className="text-base md:text-lg font-normal tracking-tight text-black font-heebo">Naloxone Finder</h1>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5 opacity-90 hover:opacity-100 transition-opacity">
+            <Image
+              src="/findmynaloxone-logo.png"
+              alt="Find My Naloxone"
+              width={32}
+              height={32}
+            />
+            <h1 className="text-base md:text-lg font-normal tracking-tight text-black font-heebo">Naloxone Finder</h1>
+          </div>
+          <a
+            href="https://www.novedevice.com/contact-us"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:opacity-90 px-4 md:px-5 py-2 rounded-full transition-all text-sm md:text-base min-h-[44px] flex items-center font-heebo font-medium"
+            style={{ backgroundColor: '#F9542E' }}
+          >
+            Contact
+          </a>
         </div>
       </header>
 
@@ -124,12 +116,12 @@ export default function Home() {
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 md:py-12">
         <div className="w-full max-w-3xl space-y-8">
           {/* Headline */}
-          <div className="text-center space-y-3 mb-12 md:mb-16">
+          <div className="text-center space-y-1 mb-12 md:mb-16">
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-tight text-black font-heebo">
-              Find free
+              Find Free
             </h2>
             <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-tight font-heebo" style={{ color: '#F9542E' }}>
-              naloxone
+              Naloxone
             </h2>
             <p className="text-gray-600 text-base sm:text-lg md:text-xl mt-4 md:mt-6 font-light font-heebo">
               Locate pharmacies and resources in your area
@@ -139,7 +131,7 @@ export default function Home() {
           {/* Search Form */}
           <form
             onSubmit={handleSearch}
-            className="relative"
+            className="relative max-w-md mx-auto"
           >
             <div className={`
               flex flex-col md:flex-row items-stretch md:items-center gap-3 md:gap-0
@@ -187,12 +179,11 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Typewriter Loading Message */}
+            {/* Loading Carousel Message */}
             {isLoading && (
               <div className="mt-4 text-center min-h-[24px]">
-                <span className="text-gray-600 text-sm font-heebo">
+                <span className="text-gray-600 text-sm font-heebo transition-opacity duration-300">
                   {typedText}
-                  <span className={`inline-block w-0.5 h-4 bg-gray-600 ml-0.5 align-middle ${showCursor ? 'opacity-100' : 'opacity-0'}`} />
                 </span>
               </div>
             )}
@@ -239,12 +230,25 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Minimal Footer */}
-      <footer className="p-4 md:p-6 lg:p-8">
-        <button className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors text-sm group min-h-[44px] font-heebo">
-          <span className="text-lg group-hover:scale-110 transition-transform">?</span>
-          <span>About</span>
-        </button>
+      {/* Footer */}
+      <footer className="p-4 md:p-6 lg:p-8 border-t border-gray-200">
+        <div className="flex justify-center">
+          <a
+            href="https://www.novedevice.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-heebo"
+          >
+            <span>powered by</span>
+            <Image
+              src="/nove logo black.png"
+              alt="Nove"
+              width={60}
+              height={20}
+              className="object-contain"
+            />
+          </a>
+        </div>
       </footer>
     </div>
   );

@@ -24,6 +24,11 @@ export default function ResultsPage() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
+  // Filter states
+  const [costFilter, setCostFilter] = useState<'all' | 'free' | 'paid'>('all');
+  const [trainingFilter, setTrainingFilter] = useState<'all' | 'required' | 'not-required'>('all');
+  const [locationTypeFilter, setLocationTypeFilter] = useState<'all' | 'physical' | 'online'>('all');
+
   useEffect(() => {
     const resultsData = sessionStorage.getItem('searchResults');
     const paramsData = sessionStorage.getItem('searchParams');
@@ -54,7 +59,63 @@ export default function ResultsPage() {
     return false;
   };
 
-  const sortedProviders = [...providers].sort((a, b) => {
+  // Helper function to detect if training is required
+  const requiresTraining = (provider: Provider): boolean => {
+    const desc = provider.description.toLowerCase();
+    const tags = provider.tags?.map(t => t.toLowerCase()) || [];
+
+    // Check if 'training' is a standalone tag
+    if (tags.includes('training')) {
+      return true;
+    }
+
+    // Check for training-related keywords in description or tags
+    const allTags = tags.join(' ');
+    const trainingKeywords = ['training required', 'training needed', 'certification required', 'must complete training'];
+    return trainingKeywords.some(keyword => desc.includes(keyword) || allTags.includes(keyword));
+  };
+
+  // Helper function to detect location type
+  const getLocationType = (provider: Provider): 'physical' | 'online' => {
+    const desc = provider.description.toLowerCase();
+    const location = provider.location?.toLowerCase() || '';
+    const allTags = provider.tags?.map(t => t.toLowerCase()).join(' ') || '';
+
+    // Combine mail order and online into single 'online' category
+    const onlineKeywords = ['mail order', 'mailed', 'ship', 'delivery', 'shipped', 'online', 'virtual', 'telehealth', 'internet', 'web-based', 'digital', 'remote'];
+
+    if (onlineKeywords.some(keyword => desc.includes(keyword) || location.includes(keyword) || allTags.includes(keyword))) {
+      return 'online';
+    }
+    return 'physical';
+  };
+
+  // Apply filters
+  const filteredProviders = providers.filter(provider => {
+    // Cost filter
+    if (costFilter !== 'all') {
+      const isFree = isProviderFree(provider);
+      if (costFilter === 'free' && !isFree) return false;
+      if (costFilter === 'paid' && isFree) return false;
+    }
+
+    // Training filter
+    if (trainingFilter !== 'all') {
+      const needsTraining = requiresTraining(provider);
+      if (trainingFilter === 'required' && !needsTraining) return false;
+      if (trainingFilter === 'not-required' && needsTraining) return false;
+    }
+
+    // Location type filter
+    if (locationTypeFilter !== 'all') {
+      const locationType = getLocationType(provider);
+      if (locationTypeFilter !== locationType) return false;
+    }
+
+    return true;
+  });
+
+  const sortedProviders = [...filteredProviders].sort((a, b) => {
     // Tier 1: Free > Paid
     const aIsFree = isProviderFree(a);
     const bIsFree = isProviderFree(b);
@@ -62,21 +123,16 @@ export default function ResultsPage() {
     if (aIsFree && !bIsFree) return -1;
     if (!aIsFree && bIsFree) return 1;
 
-    // Tier 2: 24/7 > non-24/7
-    const aHas24_7 = a.tags?.some(tag => tag === '24/7') || false;
-    const bHas24_7 = b.tags?.some(tag => tag === '24/7') || false;
+    // Tier 2: Distance (online = farthest)
+    // Check if providers are online
+    const aIsOnline = getLocationType(a) === 'online';
+    const bIsOnline = getLocationType(b) === 'online';
 
-    if (aHas24_7 && !bHas24_7) return -1;
-    if (!aHas24_7 && bHas24_7) return 1;
+    // If one is online and one is physical, physical comes first
+    if (!aIsOnline && bIsOnline) return -1;
+    if (aIsOnline && !bIsOnline) return 1;
 
-    // Tier 3: OTC > non-OTC
-    const aHasOTC = a.tags?.some(tag => tag.toUpperCase() === 'OTC') || false;
-    const bHasOTC = b.tags?.some(tag => tag.toUpperCase() === 'OTC') || false;
-
-    if (aHasOTC && !bHasOTC) return -1;
-    if (!aHasOTC && bHasOTC) return 1;
-
-    // Finally, sort by distance (closest first)
+    // If both are physical or both are online, sort by distance
     const distanceA = parseFloat(a.distance?.replace(/[^\d.]/g, '') || '9999');
     const distanceB = parseFloat(b.distance?.replace(/[^\d.]/g, '') || '9999');
     return distanceA - distanceB;
@@ -143,7 +199,7 @@ export default function ResultsPage() {
         <div className="p-3 md:p-4 lg:p-6 flex items-center justify-between gap-2 md:gap-4">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity shrink-0">
             <Image
-              src="/bizbyme-logo.png"
+              src="/findmynaloxone-logo.png"
               alt="Naloxone Finder Logo"
               width={28}
               height={28}
@@ -167,6 +223,58 @@ export default function ResultsPage() {
           </Link>
         </div>
       </header>
+
+      {/* Filters */}
+      <div className="border-b border-gray-200 bg-light-grey">
+        <div className="max-w-5xl mx-auto px-4 md:px-6 py-4 md:py-5">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-sm font-medium text-gray-700 font-heebo">Filter Results</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Cost Filter */}
+              <div>
+                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Cost</label>
+                <select
+                  value={costFilter}
+                  onChange={(e) => setCostFilter(e.target.value as 'all' | 'free' | 'paid')}
+                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
+                >
+                  <option value="all">All</option>
+                  <option value="free">Free</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </div>
+
+              {/* Training Filter */}
+              <div>
+                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Training Required</label>
+                <select
+                  value={trainingFilter}
+                  onChange={(e) => setTrainingFilter(e.target.value as 'all' | 'required' | 'not-required')}
+                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
+                >
+                  <option value="all">All</option>
+                  <option value="required">Yes</option>
+                  <option value="not-required">No</option>
+                </select>
+              </div>
+
+              {/* Location Type Filter */}
+              <div>
+                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Location Type</label>
+                <select
+                  value={locationTypeFilter}
+                  onChange={(e) => setLocationTypeFilter(e.target.value as 'all' | 'physical' | 'online')}
+                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
+                >
+                  <option value="all">All</option>
+                  <option value="physical">Physical Location</option>
+                  <option value="online">Online</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Providers List */}
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-12">
@@ -208,8 +316,40 @@ export default function ResultsPage() {
       </main>
 
       {/* Footer */}
-      <footer className="p-6 border-t border-gray-300 text-center text-gray-600 text-sm font-heebo">
-        <p>Found {sortedProviders.length} provider{sortedProviders.length !== 1 ? 's' : ''}</p>
+      <footer className="p-6 border-t border-gray-300">
+        <div className="flex flex-col gap-4">
+          <p className="text-center text-gray-600 text-sm font-heebo">
+            Found {sortedProviders.length} provider{sortedProviders.length !== 1 ? 's' : ''}
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex-1 flex justify-center sm:justify-start">
+              <a
+                href="https://www.novedevice.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-heebo"
+              >
+                <span>powered by</span>
+                <Image
+                  src="/nove logo black.png"
+                  alt="Nove"
+                  width={60}
+                  height={20}
+                  className="object-contain"
+                />
+              </a>
+            </div>
+            <a
+              href="https://www.novedevice.com/contact-us"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:opacity-90 px-4 md:px-5 py-2 rounded-full transition-all text-sm md:text-base min-h-[44px] flex items-center font-heebo font-medium"
+              style={{ backgroundColor: '#F9542E' }}
+            >
+              Contact
+            </a>
+          </div>
+        </div>
       </footer>
     </div>
   );
@@ -238,6 +378,27 @@ function ProviderCard({ provider }: { provider: Provider }) {
   };
 
   const providerIsFree = isFree();
+
+  // Helper function to detect if provider is non-physical (online, mail order, etc.)
+  const isNonPhysicalLocation = (): boolean => {
+    const description = provider.description.toLowerCase();
+    const location = provider.location?.toLowerCase() || '';
+    const allTags = provider.tags?.map(t => t.toLowerCase()).join(' ') || '';
+
+    const nonPhysicalKeywords = [
+      'mail order', 'online', 'virtual', 'telehealth',
+      'ship', 'delivery', 'mailed', 'internet', 'web-based',
+      'digital', 'remote'
+    ];
+
+    return nonPhysicalKeywords.some(keyword =>
+      description.includes(keyword) ||
+      location.includes(keyword) ||
+      allTags.includes(keyword)
+    );
+  };
+
+  const isNonPhysical = isNonPhysicalLocation();
 
   // Extract just city from location (e.g., "Venue Name, City, State" -> "City")
   const getShortLocation = (location: string) => {
@@ -270,28 +431,22 @@ function ProviderCard({ provider }: { provider: Provider }) {
                 {providerIsFree ? 'Free' : '$$$'}
               </span>
             </div>
-            {provider.organizer && (
-              link ? (
-                <a
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs md:text-sm text-gray-600 hover:text-gray-900 hover:underline transition-colors font-heebo"
-                >
-                  {provider.organizer}
-                </a>
-              ) : (
-                <p className="text-xs md:text-sm text-gray-600 font-heebo">
-                  {provider.organizer}
-                </p>
-              )
+            {link && (
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs md:text-sm text-gray-600 hover:text-gray-900 underline transition-colors font-heebo"
+              >
+                visit site
+              </a>
             )}
           </div>
 
           {/* Distance badge */}
           {provider.distance && (
             <span className="text-xs text-gray-700 bg-light-grey px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 font-heebo">
-              {getDistance(provider.distance)}
+              {isNonPhysical ? 'online' : getDistance(provider.distance)}
             </span>
           )}
         </div>
@@ -330,10 +485,11 @@ function ProviderCard({ provider }: { provider: Provider }) {
           {provider.tags && provider.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {(() => {
-                // Filter out free and paid tags (shown in header)
+                // Filter out free, paid, and irrelevant tags
+                const irrelevantTags = ['free', 'paid', 'harm reduction', 'community', 'no prescription'];
                 const filteredTags = provider.tags.filter(tag => {
                   const lowerTag = tag.toLowerCase();
-                  return lowerTag !== 'free' && lowerTag !== 'paid';
+                  return !irrelevantTags.includes(lowerTag);
                 });
 
                 // Sort tags to prioritize OTC and 24/7 first
@@ -364,18 +520,24 @@ function ProviderCard({ provider }: { provider: Provider }) {
             </div>
           )}
 
-          {/* Get Directions button */}
-          {provider.location && (
+          {/* Action button - Get Directions or Visit Website */}
+          {(provider.location || link) && (
             <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(provider.location)}`}
+              href={
+                isNonPhysical && link
+                  ? link
+                  : provider.location
+                    ? `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(provider.location)}`
+                    : link || '#'
+              }
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 text-white hover:opacity-90 px-4 py-2.5 md:py-2 rounded-full transition-all text-sm font-medium sm:ml-auto min-h-[44px] font-heebo"
               style={{ backgroundColor: '#F9542E' }}
             >
-              Get Directions
+              {isNonPhysical && link ? 'Visit Website' : 'Get Directions'}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isNonPhysical && link ? "M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" : "M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"} />
               </svg>
             </a>
           )}

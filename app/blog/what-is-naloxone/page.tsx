@@ -20,7 +20,7 @@ export default function WhatIsNaloxonePage() {
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Image
-              src="/bizbyme-logo.png"
+              src="/findmynaloxone-logo.png"
               alt="Naloxone Finder"
               width={40}
               height={40}
@@ -233,9 +233,39 @@ export default function WhatIsNaloxonePage() {
 
       {/* Footer */}
       <footer className="border-t border-gray-200 mt-16">
-        <div className="max-w-4xl mx-auto px-4 md:px-6 py-8 text-center text-sm text-gray-600">
-          <p>© 2025 Naloxone Finder. Information provided for educational purposes.</p>
-          <p className="mt-2">Always call 911 in case of a medical emergency.</p>
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+          <div className="text-center text-sm text-gray-600 mb-6">
+            <p>© 2025 Naloxone Finder. Information provided for educational purposes.</p>
+            <p className="mt-2">Always call 911 in case of a medical emergency.</p>
+          </div>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-200">
+            <div className="flex-1 flex justify-center sm:justify-start">
+              <a
+                href="https://www.novedevice.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors text-sm font-heebo"
+              >
+                <span>powered by</span>
+                <Image
+                  src="/nove logo black.png"
+                  alt="Nove"
+                  width={60}
+                  height={20}
+                  className="object-contain"
+                />
+              </a>
+            </div>
+            <a
+              href="https://www.novedevice.com/contact-us"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:opacity-90 px-4 md:px-5 py-2 rounded-full transition-all text-sm md:text-base min-h-[44px] flex items-center font-heebo font-medium"
+              style={{ backgroundColor: '#F9542E' }}
+            >
+              Contact
+            </a>
+          </div>
         </div>
       </footer>
     </div>
