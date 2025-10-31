@@ -97,8 +97,9 @@ export default function Home() {
               alt="Find My Naloxone"
               width={32}
               height={32}
+              priority
             />
-            <h1 className="text-base md:text-lg font-normal tracking-tight text-black font-heebo">Naloxone Finder</h1>
+            <span className="text-base md:text-lg font-normal tracking-tight text-black font-heebo">Naloxone Finder</span>
           </div>
           <a
             href="https://www.novedevice.com/contact-us"
@@ -117,12 +118,10 @@ export default function Home() {
         <div className="w-full max-w-3xl space-y-8">
           {/* Headline */}
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-black font-heebo" style={{ letterSpacing: '0.025em' }}>
-              Find Free
-            </h2>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight font-heebo" style={{ color: '#F9542E', letterSpacing: '0.025em' }}>
-              Naloxone
-            </h2>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-black font-heebo" style={{ letterSpacing: '0.025em' }}>
+              Find Free{' '}
+              <span className="block" style={{ color: '#F9542E' }}>Naloxone</span>
+            </h1>
             <p className="text-gray-600 text-base sm:text-lg md:text-xl my-6 md:my-8 font-light font-heebo">
               Locate pharmacies and resources in your area
             </p>
@@ -192,9 +191,9 @@ export default function Home() {
           {/* Blog Articles */}
           {!isLoading && (
             <div className="mt-12 md:mt-16 animate-fadeIn">
-              <h3 className="text-center text-sm md:text-base text-gray-600 mb-6 font-heebo">
+              <h2 className="text-center text-sm md:text-base text-gray-600 mb-6 font-heebo">
                 Learn about naloxone
-              </h3>
+              </h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {blogArticles.map((article, index) => (
                   <Link
@@ -209,9 +208,9 @@ export default function Home() {
                     "
                   >
                     <div>
-                      <h4 className="font-medium text-base md:text-lg mb-2 font-heebo group-hover:text-gray-900" style={{ color: '#F9542E' }}>
+                      <h3 className="font-medium text-base md:text-lg mb-2 font-heebo group-hover:text-gray-900" style={{ color: '#F9542E' }}>
                         {article.title}
-                      </h4>
+                      </h3>
                       <p className="text-xs md:text-sm text-gray-600 font-heebo">
                         {article.description}
                       </p>

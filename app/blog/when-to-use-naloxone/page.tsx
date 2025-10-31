@@ -1,20 +1,43 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import ArticleSchema from '@/components/structured-data/ArticleSchema';
 
 export const metadata: Metadata = {
   title: 'When to Use Naloxone | Naloxone Finder',
   description: 'Learn when to use naloxone (Narcan®) to reverse an opioid overdose. Recognize key overdose symptoms, understand timing, and know how to act safely and effectively.',
+  alternates: {
+    canonical: '/blog/when-to-use-naloxone',
+  },
+  keywords: ['when to use naloxone', 'opioid overdose symptoms', 'overdose signs', 'naloxone timing', 'recognize overdose', 'opioid emergency'],
+  authors: [{ name: 'Naloxone Finder Team' }],
   openGraph: {
     title: 'When to Use Naloxone | Naloxone Finder',
     description: 'Recognize opioid overdose symptoms and know exactly when to administer naloxone to save a life.',
     type: 'article',
+    url: '/blog/when-to-use-naloxone',
+    publishedTime: '2025-01-15T00:00:00.000Z',
+    modifiedTime: '2025-10-31T00:00:00.000Z',
+    authors: ['Naloxone Finder Team'],
+    section: 'Emergency Response',
+    tags: ['overdose recognition', 'naloxone timing', 'emergency response', 'opioid crisis', 'harm reduction'],
   },
 };
 
 export default function WhenToUseNaloxonePage() {
   return (
     <div className="min-h-screen bg-white font-heebo">
+      <ArticleSchema
+        headline="When to Use Naloxone"
+        description="Learn when to use naloxone (Narcan®) to reverse an opioid overdose. Recognize key overdose symptoms, understand timing, and know how to act safely and effectively."
+        datePublished="2025-01-15T00:00:00.000Z"
+        dateModified="2025-10-31T00:00:00.000Z"
+        authorName="Naloxone Finder Team"
+        imageUrl="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/wen-to-use-naloxone.jpg"
+        url="/blog/when-to-use-naloxone"
+        section="Emergency Response"
+        keywords={['when to use naloxone', 'opioid overdose symptoms', 'overdose signs', 'naloxone timing', 'recognize overdose', 'opioid emergency']}
+      />
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
@@ -60,6 +83,7 @@ export default function WhenToUseNaloxonePage() {
               width={1200}
               height={600}
               className="w-full h-auto object-cover"
+              priority
             />
           </div>
 

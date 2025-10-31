@@ -1,20 +1,43 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import ArticleSchema from '@/components/structured-data/ArticleSchema';
 
 export const metadata: Metadata = {
   title: 'What is Naloxone? | Naloxone Finder',
   description: 'Learn what naloxone (Narcan®) is, how it works to reverse opioid overdoses, and why carrying it can save lives. Discover its forms, safety, and community importance.',
+  alternates: {
+    canonical: '/blog/what-is-naloxone',
+  },
+  keywords: ['naloxone', 'narcan', 'opioid overdose', 'overdose reversal', 'naloxone nasal spray', 'what is naloxone', 'harm reduction'],
+  authors: [{ name: 'Naloxone Finder Team' }],
   openGraph: {
     title: 'What is Naloxone? | Naloxone Finder',
     description: 'Learn what naloxone (Narcan®) is, how it works to reverse opioid overdoses, and why carrying it can save lives.',
     type: 'article',
+    url: '/blog/what-is-naloxone',
+    publishedTime: '2025-01-15T00:00:00.000Z',
+    modifiedTime: '2025-10-31T00:00:00.000Z',
+    authors: ['Naloxone Finder Team'],
+    section: 'Education',
+    tags: ['naloxone', 'narcan', 'opioid overdose', 'harm reduction', 'overdose prevention'],
   },
 };
 
 export default function WhatIsNaloxonePage() {
   return (
     <div className="min-h-screen bg-white font-heebo">
+      <ArticleSchema
+        headline="What is Naloxone?"
+        description="Learn what naloxone (Narcan®) is, how it works to reverse opioid overdoses, and why carrying it can save lives. Discover its forms, safety, and community importance."
+        datePublished="2025-01-15T00:00:00.000Z"
+        dateModified="2025-10-31T00:00:00.000Z"
+        authorName="Naloxone Finder Team"
+        imageUrl="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/what-is-naloxone.jpg"
+        url="/blog/what-is-naloxone"
+        section="Education"
+        keywords={['naloxone', 'narcan', 'opioid overdose', 'overdose reversal', 'naloxone nasal spray', 'what is naloxone', 'harm reduction']}
+      />
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
@@ -60,6 +83,7 @@ export default function WhatIsNaloxonePage() {
               width={1200}
               height={600}
               className="w-full h-auto object-cover"
+              priority
             />
           </div>
 

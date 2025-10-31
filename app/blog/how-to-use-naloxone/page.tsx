@@ -1,20 +1,43 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
+import ArticleSchema from '@/components/structured-data/ArticleSchema';
 
 export const metadata: Metadata = {
   title: 'How to Use Naloxone | Naloxone Finder',
   description: 'Learn how to recognize an opioid overdose and correctly use naloxone (Narcan®) to reverse it — step-by-step instructions, important safety tips, and key next steps.',
+  alternates: {
+    canonical: '/blog/how-to-use-naloxone',
+  },
+  keywords: ['how to use naloxone', 'naloxone instructions', 'narcan nasal spray', 'opioid overdose response', 'naloxone administration', 'overdose first aid'],
+  authors: [{ name: 'Naloxone Finder Team' }],
   openGraph: {
     title: 'How to Use Naloxone | Naloxone Finder',
     description: 'Step-by-step instructions for recognizing an opioid overdose and correctly administering naloxone to save a life.',
     type: 'article',
+    url: '/blog/how-to-use-naloxone',
+    publishedTime: '2025-01-15T00:00:00.000Z',
+    modifiedTime: '2025-10-31T00:00:00.000Z',
+    authors: ['Naloxone Finder Team'],
+    section: 'Instructions',
+    tags: ['naloxone administration', 'narcan instructions', 'overdose response', 'emergency medicine', 'harm reduction'],
   },
 };
 
 export default function HowToUseNaloxonePage() {
   return (
     <div className="min-h-screen bg-white font-heebo">
+      <ArticleSchema
+        headline="How to Use Naloxone"
+        description="Learn how to recognize an opioid overdose and correctly use naloxone (Narcan®) to reverse it — step-by-step instructions, important safety tips, and key next steps."
+        datePublished="2025-01-15T00:00:00.000Z"
+        dateModified="2025-10-31T00:00:00.000Z"
+        authorName="Naloxone Finder Team"
+        imageUrl="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/how-to-use-naloxone.jpg"
+        url="/blog/how-to-use-naloxone"
+        section="Instructions"
+        keywords={['how to use naloxone', 'naloxone instructions', 'narcan nasal spray', 'opioid overdose response', 'naloxone administration', 'overdose first aid']}
+      />
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
@@ -60,6 +83,7 @@ export default function HowToUseNaloxonePage() {
               width={1200}
               height={600}
               className="w-full h-auto object-cover"
+              priority
             />
           </div>
 
