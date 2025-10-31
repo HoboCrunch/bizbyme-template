@@ -28,6 +28,7 @@ export default function ResultsPage() {
   const [costFilter, setCostFilter] = useState<'all' | 'free' | 'paid'>('all');
   const [trainingFilter, setTrainingFilter] = useState<'all' | 'required' | 'not-required'>('all');
   const [locationTypeFilter, setLocationTypeFilter] = useState<'all' | 'physical' | 'online'>('all');
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   useEffect(() => {
     const resultsData = sessionStorage.getItem('searchResults');
@@ -214,9 +215,9 @@ export default function ResultsPage() {
 
           <Link
             href="/"
-            className="flex items-center gap-1.5 md:gap-2 bg-light-grey hover:bg-gray-200 border border-gray-300 hover:border-gray-400 px-3 md:px-4 py-2.5 md:py-2 rounded-full transition-all text-xs md:text-sm shrink-0 min-h-[44px] text-black font-heebo"
+            className="flex items-center justify-center w-[44px] h-[44px] sm:w-auto sm:h-auto sm:gap-1.5 sm:px-3 sm:py-2.5 bg-light-grey hover:bg-gray-200 border border-gray-300 hover:border-gray-400 rounded-full transition-all text-xs shrink-0 text-black font-heebo"
           >
-            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <span className="hidden sm:inline">New Search</span>
@@ -224,64 +225,30 @@ export default function ResultsPage() {
         </div>
       </header>
 
-      {/* Filters */}
-      <div className="border-b border-gray-200 bg-light-grey">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 py-4 md:py-5">
-          <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-medium text-gray-700 font-heebo">Filter Results</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {/* Cost Filter */}
-              <div>
-                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Cost</label>
-                <select
-                  value={costFilter}
-                  onChange={(e) => setCostFilter(e.target.value as 'all' | 'free' | 'paid')}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
-                >
-                  <option value="all">All</option>
-                  <option value="free">Free</option>
-                  <option value="paid">Paid</option>
-                </select>
-              </div>
-
-              {/* Training Filter */}
-              <div>
-                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Training Required</label>
-                <select
-                  value={trainingFilter}
-                  onChange={(e) => setTrainingFilter(e.target.value as 'all' | 'required' | 'not-required')}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
-                >
-                  <option value="all">All</option>
-                  <option value="required">Yes</option>
-                  <option value="not-required">No</option>
-                </select>
-              </div>
-
-              {/* Location Type Filter */}
-              <div>
-                <label className="text-xs text-gray-600 mb-1.5 block font-heebo">Location Type</label>
-                <select
-                  value={locationTypeFilter}
-                  onChange={(e) => setLocationTypeFilter(e.target.value as 'all' | 'physical' | 'online')}
-                  className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent font-heebo"
-                >
-                  <option value="all">All</option>
-                  <option value="physical">Physical Location</option>
-                  <option value="online">Online</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Providers List */}
       <main className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-12">
-        <div className="grid gap-4 md:gap-6">
-          {sortedProviders.map((provider, index) => (
-            <ProviderCard key={index} provider={provider} />
-          ))}
+        <div className="relative">
+          <div className="grid gap-4 md:gap-6">
+            {sortedProviders.map((provider, index) => (
+              <ProviderCard key={index} provider={provider} />
+            ))}
+          </div>
+
+          {/* Desktop Filter Button - Sticky within results container */}
+          <div className="hidden md:block absolute top-0 left-full ml-4 md:ml-6 h-full">
+            <div className="sticky top-32 h-0">
+              <button
+                onClick={() => setIsFilterModalOpen(true)}
+                className="flex items-center gap-1.5 md:gap-2 bg-light-grey hover:bg-gray-200 border border-gray-300 hover:border-gray-400 px-3 md:px-4 py-2.5 md:py-2 rounded-full shadow-lg transition-all min-h-[44px] text-xs md:text-sm text-black font-heebo"
+                aria-label="Open filters"
+              >
+                <svg className="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span className="hidden sm:inline">Filters</span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Load More Button */}
@@ -314,6 +281,114 @@ export default function ResultsPage() {
           </div>
         )}
       </main>
+
+      {/* Mobile Filter Button */}
+      <button
+        onClick={() => setIsFilterModalOpen(true)}
+        className="md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-[44px] h-[44px] sm:w-auto sm:h-auto sm:gap-1.5 sm:px-3 sm:py-2.5 bg-light-grey hover:bg-gray-200 border border-gray-300 hover:border-gray-400 rounded-full shadow-lg transition-all text-xs text-black font-heebo"
+        aria-label="Open filters"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        <span className="hidden sm:inline">Filters</span>
+      </button>
+
+      {/* Filter Modal */}
+      {isFilterModalOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setIsFilterModalOpen(false)}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 relative">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-black font-heebo">Filter Results</h3>
+                <button
+                  onClick={() => setIsFilterModalOpen(false)}
+                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  aria-label="Close filters"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Filter Options */}
+              <div className="flex flex-col gap-4">
+                {/* Cost Filter */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block font-heebo">Cost</label>
+                  <select
+                    value={costFilter}
+                    onChange={(e) => setCostFilter(e.target.value as 'all' | 'free' | 'paid')}
+                    className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:bg-gray-200 transition-colors font-heebo"
+                  >
+                    <option value="all">All</option>
+                    <option value="free">Free</option>
+                    <option value="paid">Paid</option>
+                  </select>
+                </div>
+
+                {/* Training Filter */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block font-heebo">Training Required</label>
+                  <select
+                    value={trainingFilter}
+                    onChange={(e) => setTrainingFilter(e.target.value as 'all' | 'required' | 'not-required')}
+                    className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:bg-gray-200 transition-colors font-heebo"
+                  >
+                    <option value="all">All</option>
+                    <option value="required">Yes</option>
+                    <option value="not-required">No</option>
+                  </select>
+                </div>
+
+                {/* Location Type Filter */}
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-2 block font-heebo">Location Type</label>
+                  <select
+                    value={locationTypeFilter}
+                    onChange={(e) => setLocationTypeFilter(e.target.value as 'all' | 'physical' | 'online')}
+                    className="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent hover:bg-gray-200 transition-colors font-heebo"
+                  >
+                    <option value="all">All</option>
+                    <option value="physical">Physical Location</option>
+                    <option value="online">Online</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => {
+                    setCostFilter('all');
+                    setTrainingFilter('all');
+                    setLocationTypeFilter('all');
+                  }}
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 border border-gray-300 px-4 py-3 rounded-full transition-all text-sm font-medium text-black font-heebo"
+                >
+                  Clear All
+                </button>
+                <button
+                  onClick={() => setIsFilterModalOpen(false)}
+                  className="flex-1 text-white hover:opacity-90 px-4 py-3 rounded-full transition-all text-sm font-medium font-heebo"
+                  style={{ backgroundColor: '#F9542E' }}
+                >
+                  Apply Filters
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Footer */}
       <footer className="p-6 border-t border-gray-300">

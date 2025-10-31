@@ -55,7 +55,7 @@ export default function WhenToUseNaloxonePage() {
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
             <Image
-              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2350552555.jpg"
+              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/wen-to-use-naloxone.jpg"
               alt="Naloxone awareness event - community education on recognizing and responding to opioid overdoses"
               width={1200}
               height={600}
@@ -106,7 +106,7 @@ export default function WhenToUseNaloxonePage() {
             {/* Image: Naloxone at Pharmacy */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
               <Image
-                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2361312847.jpg"
+                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/wen-to-use-naloxone-2.jpg"
                 alt="Narcan displayed at pharmacy counter - easily accessible for emergency use"
                 width={1200}
                 height={675}

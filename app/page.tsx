@@ -116,14 +116,14 @@ export default function Home() {
       <main className="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 md:py-12">
         <div className="w-full max-w-3xl space-y-8">
           {/* Headline */}
-          <div className="text-center space-y-1 mb-12 md:mb-16">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-tight text-black font-heebo">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-black font-heebo" style={{ letterSpacing: '0.025em' }}>
               Find Free
             </h2>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-tight font-heebo" style={{ color: '#F9542E' }}>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight font-heebo" style={{ color: '#F9542E', letterSpacing: '0.025em' }}>
               Naloxone
             </h2>
-            <p className="text-gray-600 text-base sm:text-lg md:text-xl mt-4 md:mt-6 font-light font-heebo">
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl my-6 md:my-8 font-light font-heebo">
               Locate pharmacies and resources in your area
             </p>
           </div>

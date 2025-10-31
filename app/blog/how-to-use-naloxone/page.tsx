@@ -55,7 +55,7 @@ export default function HowToUseNaloxonePage() {
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
             <Image
-              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2510277709.jpg"
+              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/how-to-use-naloxone.jpg"
               alt="Narcan naloxone nasal spray - emergency medication for opioid overdose reversal"
               width={1200}
               height={600}
@@ -131,7 +131,7 @@ export default function HowToUseNaloxonePage() {
             {/* Image: Naloxone at Pharmacy */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
               <Image
-                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2361312847.jpg"
+                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/how-to-use-2.jpg"
                 alt="Narcan available over-the-counter at pharmacy - accessible life-saving medication"
                 width={1200}
                 height={675}
@@ -143,54 +143,61 @@ export default function HowToUseNaloxonePage() {
               <li className="flex gap-4">
                 <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>1</span>
                 <div>
+                  <strong className="block mb-1">Carry Naloxone at all times:</strong>
+                  <p className="text-gray-800">Carrying Naloxone can make the difference between life and death in an emergency. A <a href="https://www.novedevice.com/" target="_blank" rel="noopener noreferrer" className="font-medium hover:underline" style={{ color: '#F9542E' }}>Nove</a> carrying case makes being prepared easier than ever, ensuring your naloxone is protected and accessible when seconds count.</p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>2</span>
+                <div>
                   <strong className="block mb-1">Check responsiveness:</strong>
                   <p className="text-gray-800">Shake the person gently, shout their name, rub your knuckles firmly on the breastbone (sternum). If they don&apos;t respond and are breathing slowly or not at all — treat it as an emergency.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>2</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>3</span>
                 <div>
                   <strong className="block mb-1">Call 911 immediately:</strong>
                   <p className="text-gray-800">Provide the exact location. Do not wait for medical help before administering naloxone.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>3</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>4</span>
                 <div>
                   <strong className="block mb-1">Position the person:</strong>
                   <p className="text-gray-800">Lay them on their back, tilt their head slightly back, and support their neck. This opens the airway.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>4</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>5</span>
                 <div>
                   <strong className="block mb-1">Prepare the device:</strong>
                   <p className="text-gray-800">Remove the nasal spray device from its package. Do <strong>not</strong> test or prime the device.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>5</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>6</span>
                 <div>
                   <strong className="block mb-1">Insert nozzle:</strong>
                   <p className="text-gray-800">Place your thumb on the bottom of the plunger and your first and middle fingers on either side of the nozzle. Insert the nozzle tip into one nostril, until your fingers are against the bottom of the person&apos;s nose.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>6</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>7</span>
                 <div>
                   <strong className="block mb-1">Administer the dose:</strong>
                   <p className="text-gray-800">Press the plunger fully and give the dose. Remove the device after administration.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>7</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>8</span>
                 <div>
                   <strong className="block mb-1">Recovery position:</strong>
                   <p className="text-gray-800">After administering, place the person in the &apos;recovery position&apos; (on their side), and stay with them. Monitor their breathing and responsiveness.</p>
                 </div>
               </li>
               <li className="flex gap-4">
-                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>8</span>
+                <span className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-medium" style={{ backgroundColor: '#F9542E' }}>9</span>
                 <div>
                   <strong className="block mb-1">Second dose if needed:</strong>
                   <p className="text-gray-800">If the person does not respond within 2-3 minutes, give a second dose (using a new device), and continue to wait for emergency services.</p>

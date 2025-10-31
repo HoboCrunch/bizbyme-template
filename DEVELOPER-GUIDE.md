@@ -153,7 +153,8 @@ User can sort, view details, click "Visit Website"
 
 **What it contains**:
 - Sticky header with branding, "Naloxone providers near you" headline, and "New Search" button
-- Filter controls (Cost, Training Required, Location Type)
+- Sticky filter button (bottom-left) that opens a filter modal
+- Filter modal with three filter options: Cost, Training Required, Location Type
 - Provider cards grid with Free/Paid badges, tags, and smart action buttons
 - "Load More" button
 - Footer with result count, centered Nove branding, and orange Contact button
@@ -165,10 +166,27 @@ User can sort, view details, click "Visit Website"
 - `costFilter`: Filter by free/paid ('all' | 'free' | 'paid')
 - `trainingFilter`: Filter by training requirement ('all' | 'required' | 'not-required')
 - `locationTypeFilter`: Filter by location type ('all' | 'physical' | 'online')
+- `isFilterModalOpen`: Controls filter modal visibility
 
 **Key components**:
 - `ResultsPage`: Main component
 - `ProviderCard`: Individual provider card component
+- Sticky Filter Button: Fixed position button at bottom-left
+- Filter Modal: Centered modal with backdrop overlay
+
+**Filter Modal UI**:
+- **Trigger**: Sticky button at bottom-left with filter icon (shows on mobile and desktop)
+- **Position**: Fixed at `bottom-6 left-6`, above all other content (`z-40`)
+- **Button text**: Shows "Filters" text on desktop (sm and above), icon-only on mobile
+- **Modal**: Centered overlay with semi-transparent black backdrop (`bg-black bg-opacity-50`)
+- **Modal content**: White rounded card (`rounded-2xl`) with max-width of 28rem
+- **Close options**:
+  - X button in top-right corner
+  - Click backdrop
+  - "Apply Filters" button (orange, bottom-right)
+- **Actions**:
+  - "Clear All" button: Resets all filters to 'all'
+  - "Apply Filters" button: Closes modal and applies selected filters
 
 **Filtering behavior**:
 - **Cost Filter**: Shows only free or paid providers
@@ -196,13 +214,55 @@ User can sort, view details, click "Visit Website"
 
 **When to modify**:
 - Change card design: Update `ProviderCard` function
-- Add/remove filters: Update filter state and logic
+- Add/remove filters: Update filter state, filter modal UI, and filtering logic
 - Adjust sorting: Update `sortedProviders` logic
 - Modify tag filtering: Update `irrelevantTags` array
+- Move filter button position: Update button classes (line ~269, `bottom-6 left-6`)
+- Change filter modal styling: Update modal container classes (line ~290)
+- Add new filter option: Add new state variable, add to modal UI, add filtering logic
 
 ---
 
-### 3. **`/app/api/search/route.ts`** - Main Search API
+### 3. **Blog Pages** - Educational Content
+**Purpose**: Provide educational information about naloxone
+
+**Pages**:
+- `/blog/what-is-naloxone/page.tsx` - Explains what naloxone is and how it works
+- `/blog/how-to-use-naloxone/page.tsx` - Step-by-step guide on administering naloxone
+- `/blog/when-to-use-naloxone/page.tsx` - Recognizing overdose symptoms and when to use naloxone
+
+**What each contains**:
+- SEO-optimized metadata with Open Graph tags
+- Sticky header with logo, site name, and "Back to Home" button
+- Breadcrumb navigation
+- Hero image from Supabase storage
+- Article title and meta information (last updated, read time)
+- Table of contents with anchor links
+- Structured content with headings, paragraphs, and lists
+- Related articles section at bottom
+- Footer with "powered by Nove" branding
+
+**Key features**:
+- All images hosted on Supabase storage (configured in `next.config.ts`)
+- Responsive design with mobile-first approach
+- Clean, readable typography using Heebo font
+- Orange accent color (`#F9542E`) for links and highlights
+- Light grey backgrounds for callout sections
+
+**When to modify**:
+- **Add new blog post**: Create new folder in `/app/blog/` with `page.tsx`
+- **Update content**: Edit the specific blog page file
+- **Change images**: Update image URLs in the blog page (must be from configured domain)
+- **Add to home page**: Update `blogArticles` array in `/app/page.tsx` (line ~15-31)
+- **Modify layout**: Update the common structure in any blog page
+- **Change SEO**: Update `metadata` export in each blog page (line ~5-13)
+
+**Home page integration**:
+The home page displays blog article cards linking to these pages (line ~193-228 in `/app/page.tsx`)
+
+---
+
+### 4. **`/app/api/search/route.ts`** - Main Search API
 **Purpose**: Backend endpoint that calls Perplexity AI
 
 **What it contains**:
@@ -234,7 +294,35 @@ User can sort, view details, click "Visit Website"
 
 ---
 
-### 4. **`/app/api/search-stream/route.ts`** - Streaming Search API
+### 5. **`/next.config.ts`** - Next.js Configuration
+**Purpose**: Configure Next.js build and runtime settings
+
+**What it contains**:
+- Image domains configuration for external images (Supabase)
+- TypeScript configuration
+- Build optimizations
+
+**Key configuration**:
+```typescript
+images: {
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: 'nbpyunavtweourytwcrq.supabase.co',
+      pathname: '/storage/v1/object/public/nove/**',
+    },
+  ],
+}
+```
+
+**When to modify**:
+- **Add new image domain**: Add to `remotePatterns` array
+- **Change build settings**: Update Next.js config options
+- **Add redirects**: Add redirects array for URL rewrites
+
+---
+
+### 6. **`/app/api/search-stream/route.ts`** - Streaming Search API
 **Purpose**: Alternative endpoint with real-time streaming updates
 
 **Similar to main search API but**:
@@ -246,7 +334,7 @@ User can sort, view details, click "Visit Website"
 
 ---
 
-### 5. **`/app/globals.css`** - Global Styles
+### 7. **`/app/globals.css`** - Global Styles
 **Purpose**: Defines design system tokens and global styles
 
 **What it contains**:
@@ -270,7 +358,7 @@ User can sort, view details, click "Visit Website"
 
 ---
 
-### 6. **`/app/layout.tsx`** - Root Layout
+### 8. **`/app/layout.tsx`** - Root Layout
 **Purpose**: Defines app-wide layout and metadata
 
 **What it contains**:
@@ -286,7 +374,7 @@ User can sort, view details, click "Visit Website"
 
 ---
 
-### 7. **`/tailwind.config.ts`** - Tailwind Configuration
+### 9. **`/tailwind.config.ts`** - Tailwind Configuration
 **Purpose**: Extends Tailwind CSS with custom design tokens
 
 **What it contains**:
@@ -810,7 +898,31 @@ Check these files first:
 
 ## Changelog
 
-### v1.2.0 (Current)
+### v1.3.0 (Current)
+**Date**: 2025-10-31
+
+**New Features**:
+- **Sticky Filter Modal**: Replaced inline filter bar with sticky button at bottom-left
+  - Filter button fixed at bottom-left corner (mobile and desktop)
+  - Clicking opens centered modal with all filter options
+  - Modal includes backdrop overlay that closes on click
+  - "Clear All" button to reset all filters
+  - "Apply Filters" button to close modal
+  - Filter icon with "Filters" text (desktop only, icon-only on mobile)
+- **Improved Filter UX**: Gray selectors on white background (previously gray background bar)
+- **Blog pages**: Added three educational blog articles with SEO optimization
+  - What is Naloxone?
+  - How to Use Naloxone
+  - When to Use Naloxone
+- **Image hosting**: Configured Next.js to allow Supabase images for blog content
+
+**UI/UX Improvements**:
+- Cleaner, less cluttered results page layout
+- Better mobile experience with sticky filter access
+- Improved visual hierarchy with modal-based filtering
+- Responsive filter modal design
+
+### v1.2.0
 **Date**: 2025-10-28
 
 **New Features**:
@@ -873,4 +985,4 @@ Check these files first:
 
 ---
 
-*Last Updated: 2025-10-28*
+*Last Updated: 2025-10-31*

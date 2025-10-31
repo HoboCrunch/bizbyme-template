@@ -55,7 +55,7 @@ export default function WhatIsNaloxonePage() {
           {/* Hero Image */}
           <div className="mb-8 rounded-xl overflow-hidden border border-gray-300">
             <Image
-              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2350553617.jpg"
+              src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/what-is-naloxone.jpg"
               alt="Community naloxone awareness event with free naloxone distribution"
               width={1200}
               height={600}
@@ -106,7 +106,7 @@ export default function WhatIsNaloxonePage() {
             {/* Image: Narcan Product */}
             <div className="rounded-xl overflow-hidden border border-gray-300 mb-6">
               <Image
-                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/shutterstock_2510277709.jpg"
+                src="https://nbpyunavtweourytwcrq.supabase.co/storage/v1/object/public/nove/what-is-naloxone-2.jpg"
                 alt="Narcan naloxone nasal spray - life-saving medication for opioid overdose reversal"
                 width={1200}
                 height={675}
